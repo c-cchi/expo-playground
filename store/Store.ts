@@ -8,9 +8,9 @@ class Store {
     makeAutoObservable(this)
   }
 
-  load() {
+  fetchMovies(keyword: string) {
     fetch(
-      `http://www.omdbapi.com/?i=tt3896198&apikey=${Constants.manifest.extra.API_KEY}`
+      `http://www.omdbapi.com/?apikey=${Constants.manifest.extra.API_KEY}&s=${keyword}`
     )
       .then(res => res.json())
       .then(movies => {

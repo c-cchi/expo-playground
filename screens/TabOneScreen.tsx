@@ -3,18 +3,14 @@ import { observer } from 'mobx-react'
 
 import { View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
-import SearchInput from '../components/SearchInput'
+import SearchMovieBar from '../components/SearchMovieBar'
 
 import store from '../store/Store'
 
 function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-  const onLoad = () => {
-    store.load()
-  }
-
   return (
     <View style={styles.container}>
-      <SearchInput />
+      <SearchMovieBar />
     </View>
   )
 }
