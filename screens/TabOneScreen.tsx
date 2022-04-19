@@ -1,8 +1,9 @@
-import { StyleSheet, Button } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { observer } from 'mobx-react'
 
 import { View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
+import SearchInput from '../components/SearchInput'
 
 import store from '../store/Store'
 
@@ -13,7 +14,7 @@ function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
 
   return (
     <View style={styles.container}>
-      <Button title={'click to request'} onPress={onLoad} />
+      <SearchInput />
     </View>
   )
 }
