@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  SafeAreaView
+} from 'react-native'
 import { observer } from 'mobx-react'
-import { ListItem } from '@rneui/themed'
+import { ListItem, Avatar } from '@rneui/themed'
 
-import { View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
 import SearchMovieBar from '../components/SearchMovieBar'
 
@@ -25,19 +29,26 @@ function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   }, [store.movies])
 
   return (
-    <View>
+    <SafeAreaView>
       <SearchMovieBar />
       <ScrollView>
         {movieDisplay.map((movie, i) => (
           <ListItem key={i}>
+            <Avatar
+              imageProps={{ resizeMode: 'contain' }}
+              size={'xlarge'}
+              source={{ uri: movie.Poster }}
+              PlaceholderContent={<ActivityIndicator />}
+            />
             <ListItem.Content>
               <ListItem.Title>{movie.Title}</ListItem.Title>
               <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
+              <ListItem.Subtitle>{movie.Year}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
