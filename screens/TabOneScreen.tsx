@@ -8,18 +8,10 @@ import {
 import { observer } from 'mobx-react'
 import { ListItem, Avatar } from '@rneui/themed'
 
-import { RootTabScreenProps } from '../types'
+import { RootTabScreenProps, MovieInfo } from '../types'
 import SearchMovieBar from '../components/SearchMovieBar'
 
 import store from '../store/Store'
-
-interface MovieInfo {
-  Poster: string
-  Title: string
-  Type: string
-  Year: string
-  imdbID: string
-}
 
 function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const [movieDisplay, setMovieDisplay] = useState<MovieInfo[]>([])
