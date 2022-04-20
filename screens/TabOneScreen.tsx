@@ -3,10 +3,11 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from 'react-native'
 import { observer } from 'mobx-react'
-import { ListItem, Avatar } from '@rneui/themed'
+import { ListItem, Avatar, Icon } from '@rneui/themed'
 
 import { RootTabScreenProps, MovieInfo } from '../types'
 import SearchMovieBar from '../components/SearchMovieBar'
@@ -20,24 +21,28 @@ function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     setMovieDisplay(store.movies)
   }, [store.movies])
 
+  // TODO :: use <Icon type="font-awesome" name="star-o" /> for favorite
+
   return (
     <SafeAreaView>
       <SearchMovieBar />
       <ScrollView>
         {movieDisplay.map((movie, i) => (
-          <ListItem key={i}>
-            <Avatar
-              imageProps={{ resizeMode: 'contain' }}
-              size={'xlarge'}
-              source={{ uri: movie.Poster }}
-              PlaceholderContent={<ActivityIndicator />}
-            />
-            <ListItem.Content>
-              <ListItem.Title>{movie.Title}</ListItem.Title>
-              <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
-              <ListItem.Subtitle>{movie.Year}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
+          <TouchableOpacity key={i} onPress={() => {}}>
+            <ListItem>
+              <Avatar
+                imageProps={{ resizeMode: 'contain' }}
+                size={'xlarge'}
+                source={{ uri: movie.Poster }}
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <ListItem.Content>
+                <ListItem.Title>{movie.Title}</ListItem.Title>
+                <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
+                <ListItem.Subtitle>{movie.Year}</ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SafeAreaView>
