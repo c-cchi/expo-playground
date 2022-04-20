@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import Constants from 'expo-constants'
 
 class Store {
-  movies: object = {}
+  movies: Array<object> = []
 
   constructor() {
     makeAutoObservable(this)
@@ -14,7 +14,7 @@ class Store {
     )
       .then(res => res.json())
       .then(movies => {
-        store.movies = movies
+        store.movies = movies['Search']
       })
   }
 }

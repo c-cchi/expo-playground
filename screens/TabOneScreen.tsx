@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import { StyleSheet, ScrollView } from 'react-native'
 import { observer } from 'mobx-react'
+import { ListItem } from '@rneui/themed'
 
 import { View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
@@ -7,10 +9,34 @@ import SearchMovieBar from '../components/SearchMovieBar'
 
 import store from '../store/Store'
 
+interface MovieInfo {
+  Poster: string
+  Title: string
+  Type: string
+  Year: string
+  imdbID: string
+}
+
 function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+  const [movieDisplay, setMovieDisplay] = useState<MovieInfo[]>([])
+
+  useEffect(() => {
+    setMovieDisplay(store.movies)
+  }, [store.movies])
+
   return (
-    <View style={styles.container}>
+    <View>
       <SearchMovieBar />
+      <ScrollView>
+        {movieDisplay.map((movie, i) => (
+          <ListItem key={i}>
+            <ListItem.Content>
+              <ListItem.Title>{movie.Title}</ListItem.Title>
+              <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </ScrollView>
     </View>
   )
 }
