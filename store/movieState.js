@@ -12,7 +12,8 @@ export default movieState = props => {
   const initialState = {
     movies: [],
     loading: false,
-    error: ''
+    error: '',
+    movieDetail: {}
   }
   const [state, dispatch] = useReducer(Reducer, initialState)
 
@@ -24,10 +25,18 @@ export default movieState = props => {
       let response = await fetch(
         `http://www.omdbapi.com/?apikey=${Constants.manifest.extra.API_KEY}&s=${keyword}`
       ).then(res => res.json())
-      dispatch({
-        type: FETCH_MOVIES_SUCCESS,
-        payload: response['Search']
-      })
+      //TODO :: error cases
+      if (response?.['Error']) {
+        dispatch({
+          type: FETCH_MOVIES_FAILURE,
+          payload: response['Error'].toString()
+        })
+      } else {
+        dispatch({
+          type: FETCH_MOVIES_SUCCESS,
+          payload: response['Search']
+        })
+      }
     } catch (err) {
       dispatch({
         type: FETCH_MOVIES_FAILURE,
@@ -41,6 +50,7 @@ export default movieState = props => {
       value={{
         movies: state.movies,
         loading: state.loading,
+        movieDetail: state.movieDetail,
         fetchMovies
       }}
     >
