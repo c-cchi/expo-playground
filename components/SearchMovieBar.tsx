@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { SearchBar, Button } from '@rneui/themed'
 
-import store from '../store/Store'
+import MovieContext from '../store/movieContext'
 
 export default function SearchMovieBar() {
-  const [text, setText] = useState('godfather')
+  const { fetchMovies } = useContext(MovieContext)
+  const [text, setText] = useState('')
 
   const searchKeyword = () => {
-    store.fetchMovies(text)
-    console.log(store.movies)
+    fetchMovies(text)
   }
 
   return (

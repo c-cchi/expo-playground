@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import {
   StyleSheet,
   ScrollView,
@@ -6,20 +6,26 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from 'react-native'
-import { observer } from 'mobx-react'
 import { ListItem, Avatar, Icon } from '@rneui/themed'
 
 import { RootTabScreenProps, MovieInfo } from '../types'
 import SearchMovieBar from '../components/SearchMovieBar'
 
-import store from '../store/Store'
+import MovieContext from '../store/movieContext'
 
 function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+  const { movies, loading } = useContext(MovieContext)
+
   const [movieDisplay, setMovieDisplay] = useState<MovieInfo[]>([])
+  const [isLoading, setIsLoading] = useState(loading)
 
   useEffect(() => {
-    setMovieDisplay(store.movies)
-  }, [store.movies])
+    setMovieDisplay(movies)
+  }, [movies])
+
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
 
   // TODO :: use <Icon type="font-awesome" name="star-o" /> for favorite
 
@@ -27,23 +33,27 @@ function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     <SafeAreaView>
       <SearchMovieBar />
       <ScrollView>
-        {movieDisplay.map((movie, i) => (
-          <TouchableOpacity key={i} onPress={() => {}}>
-            <ListItem>
-              <Avatar
-                imageProps={{ resizeMode: 'contain' }}
-                size={'xlarge'}
-                source={{ uri: movie.Poster }}
-                PlaceholderContent={<ActivityIndicator />}
-              />
-              <ListItem.Content>
-                <ListItem.Title>{movie.Title}</ListItem.Title>
-                <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
-                <ListItem.Subtitle>{movie.Year}</ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          </TouchableOpacity>
-        ))}
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          movieDisplay.map((movie, i) => (
+            <TouchableOpacity key={i} onPress={() => {}}>
+              <ListItem>
+                <Avatar
+                  imageProps={{ resizeMode: 'contain' }}
+                  size={'xlarge'}
+                  source={{ uri: movie.Poster }}
+                  PlaceholderContent={<ActivityIndicator />}
+                />
+                <ListItem.Content>
+                  <ListItem.Title>{movie.Title}</ListItem.Title>
+                  <ListItem.Subtitle>{movie.Type}</ListItem.Subtitle>
+                  <ListItem.Subtitle>{movie.Year}</ListItem.Subtitle>
+                </ListItem.Content>
+              </ListItem>
+            </TouchableOpacity>
+          ))
+        )}
       </ScrollView>
     </SafeAreaView>
   )
@@ -66,4 +76,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default observer(TabOneScreen)
+export default TabOneScreen
