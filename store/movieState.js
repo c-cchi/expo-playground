@@ -51,7 +51,7 @@ export default movieState = props => {
 
   const fetchMovieDetail = async ID => {
     dispatch({
-      type: FETCH_MOVIES
+      type: FETCH_MOVIE_DETAIL
     })
     try {
       let response = await fetch(
