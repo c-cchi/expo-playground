@@ -1,3 +1,6 @@
 export const FETCH_MOVIES = 'fetch_movies'
 export const FETCH_MOVIES_SUCCESS = 'fetch_movies_success'
 export const FETCH_MOVIES_FAILURE = 'fetch_movies_failure'
+export const FETCH_MOVIE_DETAIL = 'fetch_movie_detail'
+export const FETCH_MOVIE_DETAIL_SUCCESS = 'fetch_movie_detail_success'
+export const FETCH_MOVIE_DETAIL_FAILURE = 'fetch_movie_detail_failure'

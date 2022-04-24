@@ -1,7 +1,10 @@
 import {
   FETCH_MOVIES,
   FETCH_MOVIES_SUCCESS,
-  FETCH_MOVIES_FAILURE
+  FETCH_MOVIES_FAILURE,
+  FETCH_MOVIE_DETAIL,
+  FETCH_MOVIE_DETAIL_SUCCESS,
+  FETCH_MOVIE_DETAIL_FAILURE
 } from './actionType'
 
 export default (state, action) => {
@@ -21,7 +24,23 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
-        error: true
+        error: action.payload
+      }
+    case FETCH_MOVIE_DETAIL:
+      return {
+        ...state,
+        detailLoading: true
+      }
+    case FETCH_MOVIE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        detailLoading: false,
+        movieDetail: action.payload
+      }
+    case FETCH_MOVIE_DETAIL_FAILURE:
+      return {
+        ...state,
+        detailLoading: false
       }
   }
 }
