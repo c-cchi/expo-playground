@@ -4,7 +4,8 @@ import {
   FETCH_MOVIES_FAILURE,
   FETCH_MOVIE_DETAIL,
   FETCH_MOVIE_DETAIL_SUCCESS,
-  FETCH_MOVIE_DETAIL_FAILURE
+  FETCH_MOVIE_DETAIL_FAILURE,
+  ADD_FAVORITE
 } from './actionType'
 
 export default (state, action) => {
@@ -41,6 +42,11 @@ export default (state, action) => {
       return {
         ...state,
         detailLoading: false
+      }
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        favoriteList: [...state.favoriteList, action.payload]
       }
   }
 }

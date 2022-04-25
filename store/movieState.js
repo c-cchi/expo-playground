@@ -8,7 +8,8 @@ import {
   FETCH_MOVIES_FAILURE,
   FETCH_MOVIE_DETAIL,
   FETCH_MOVIE_DETAIL_SUCCESS,
-  FETCH_MOVIE_DETAIL_FAILURE
+  FETCH_MOVIE_DETAIL_FAILURE,
+  ADD_FAVORITE
 } from './actionType'
 
 export default movieState = props => {
@@ -17,6 +18,7 @@ export default movieState = props => {
     loading: false,
     error: '',
     movieDetail: {},
+    favoriteList: [],
     detailLoading: false
   }
   const [state, dispatch] = useReducer(Reducer, initialState)
@@ -29,10 +31,17 @@ export default movieState = props => {
       let response = await fetch(
         `http://www.omdbapi.com/?apikey=${Constants.manifest.extra.API_KEY}&s=${keyword}`
       ).then(res => res.json())
-      dispatch({
-        type: FETCH_MOVIES_SUCCESS,
-        payload: response['Search']
-      })
+      if (response['Error']) {
+        dispatch({
+          type: FETCH_MOVIES_FAILURE,
+          payload: response['Error']
+        })
+      } else {
+        dispatch({
+          type: FETCH_MOVIES_SUCCESS,
+          payload: response['Search']
+        })
+      }
     } catch (err) {
       dispatch({
         type: FETCH_MOVIES_FAILURE,
@@ -61,6 +70,13 @@ export default movieState = props => {
     }
   }
 
+  const addFavorite = imdbID => {
+    dispatch({
+      type: ADD_FAVORITE,
+      payload: imdbID
+    })
+  }
+
   return (
     <MovieContext.Provider
       value={{
@@ -68,8 +84,10 @@ export default movieState = props => {
         loading: state.loading,
         movieDetail: state.movieDetail,
         detailLoading: state.detailLoading,
+        favoriteList: state.favoriteList,
         fetchMovies,
-        fetchMovieDetail
+        fetchMovieDetail,
+        addFavorite
       }}
     >
       {props.children}

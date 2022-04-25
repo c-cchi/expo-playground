@@ -1,19 +1,27 @@
 import { useContext, useEffect, useState } from 'react'
-import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native'
 import { Card, AirbnbRating } from '@rneui/themed'
+import { Feather, FontAwesome } from '@expo/vector-icons'
 
 import { Text, View } from './Themed'
 import MovieContext from '../store/movieContext'
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  const { movieDetail, detailLoading } = useContext(MovieContext)
+  const { movieDetail, detailLoading, favoriteList, addFavorite } = useContext(
+    MovieContext
+  )
   const [isLoading, setIsLoading] = useState(detailLoading)
 
   useEffect(() => {
     setIsLoading(detailLoading)
   }, [detailLoading])
 
-  const { Title, Poster, Year, imdbRating, Country, Plot } = movieDetail
+  const { Title, Poster, Year, imdbRating, imdbID, Plot } = movieDetail
   return isLoading ? (
     <ActivityIndicator size={'large'} />
   ) : (
@@ -28,6 +36,29 @@ export default function EditScreenInfo({ path }: { path: string }) {
               source={{ uri: Poster }}
               style={{ height: 500 }}
             />
+            {!favoriteList.find(e => e === imdbID) ? (
+              <TouchableOpacity onPress={() => addFavorite(imdbID)}>
+                <Feather
+                  name="heart"
+                  size={24}
+                  style={{
+                    alignSelf: 'flex-end',
+                    paddingTop: 10
+                  }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => {}}>
+                <FontAwesome
+                  name="heart"
+                  size={24}
+                  style={{
+                    alignSelf: 'flex-end',
+                    paddingTop: 10
+                  }}
+                />
+              </TouchableOpacity>
+            )}
             <Text>{Year}</Text>
             <Text>{Plot}</Text>
             <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
