@@ -16,7 +16,11 @@ export default function EditScreenInfo({ path }: { path: string }) {
         <Card>
           <Card.Title>{Title}</Card.Title>
           <Card.Divider />
-          <Card.Image resizeMode="contain" source={{ uri: Poster }} />
+          <Card.Image
+            resizeMode="contain"
+            source={{ uri: Poster }}
+            style={{ height: 500 }}
+          />
           <Text>{Year}</Text>
           <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
           <Text>{imdbRating}</Text>
