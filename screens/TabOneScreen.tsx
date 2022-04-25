@@ -14,7 +14,7 @@ import SearchMovieBar from '../components/SearchMovieBar'
 import MovieContext from '../store/movieContext'
 
 function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-  const { movies, loading } = useContext(MovieContext)
+  const { movies, loading, fetchMovieDetail } = useContext(MovieContext)
 
   const [movieDisplay, setMovieDisplay] = useState<MovieInfo[]>([])
   const [isLoading, setIsLoading] = useState(loading)
@@ -27,17 +27,21 @@ function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     setIsLoading(loading)
   }, [loading])
 
-  // TODO :: use <Icon type="font-awesome" name="star-o" /> for favorite
-
   return (
     <SafeAreaView>
       <SearchMovieBar />
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {isLoading ? (
           <ActivityIndicator />
         ) : (
           movieDisplay.map((movie, i) => (
-            <TouchableOpacity key={i} onPress={() => {}}>
+            <TouchableOpacity
+              key={i}
+              onPress={() => {
+                fetchMovieDetail(movie.imdbID)
+                navigation.navigate('Modal')
+              }}
+            >
               <ListItem>
                 <Avatar
                   imageProps={{ resizeMode: 'contain' }}
