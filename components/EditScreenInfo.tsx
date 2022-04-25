@@ -1,79 +1,69 @@
-import * as WebBrowser from 'expo-web-browser';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import * as WebBrowser from 'expo-web-browser'
+import { useContext, useEffect, useState } from 'react'
+import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Card, AirbnbRating } from '@rneui/themed'
 
-import Colors from '../constants/Colors';
-import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import { Text, View } from './Themed'
+import MovieContext from '../store/movieContext'
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  return (
+  const { movieDetail, detailLoading } = useContext(MovieContext)
+  const [isLoading, setIsLoading] = useState(detailLoading)
+
+  useEffect(() => {
+    setIsLoading(detailLoading)
+  }, [detailLoading])
+
+  const { Title, Poster, Year, imdbRating, Country, Plot } = movieDetail
+  return isLoading ? (
+    <ActivityIndicator size={'large'} />
+  ) : (
     <View>
-      <View style={styles.getStartedContainer}>
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
-        </Text>
-
-        <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View>
-
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
-
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity>
+      <View style={{}}>
+        <Card>
+          <Card.Title>{Title}</Card.Title>
+          <Card.Divider />
+          <Card.Image
+            resizeMode="contain"
+            source={{ uri: Poster }}
+            style={{ height: 500 }}
+          />
+          <Text>{Year}</Text>
+          <Text>{Plot}</Text>
+          <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
+          <Text>{imdbRating}</Text>
+        </Card>
       </View>
     </View>
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: 'center',
-    marginHorizontal: 50,
+    marginHorizontal: 50
   },
   homeScreenFilename: {
-    marginVertical: 7,
+    marginVertical: 7
   },
   codeHighlightContainer: {
     borderRadius: 3,
-    paddingHorizontal: 4,
+    paddingHorizontal: 4
   },
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   helpContainer: {
     marginTop: 15,
     marginHorizontal: 20,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   helpLink: {
-    paddingVertical: 15,
+    paddingVertical: 15
   },
   helpLinkText: {
-    textAlign: 'center',
-  },
-});
+    textAlign: 'center'
+  }
+})
