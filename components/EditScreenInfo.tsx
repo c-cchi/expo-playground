@@ -1,16 +1,23 @@
 import * as WebBrowser from 'expo-web-browser'
-import { useContext } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useContext, useEffect, useState } from 'react'
+import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Card, AirbnbRating } from '@rneui/themed'
 
 import { Text, View } from './Themed'
 import MovieContext from '../store/movieContext'
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  const { movieDetail } = useContext(MovieContext)
+  const { movieDetail, detailLoading } = useContext(MovieContext)
+  const [isLoading, setIsLoading] = useState(detailLoading)
 
-  const { Title, Poster, Year, imdbRating, Country } = movieDetail
-  return (
+  useEffect(() => {
+    setIsLoading(detailLoading)
+  }, [detailLoading])
+
+  const { Title, Poster, Year, imdbRating, Country, Plot } = movieDetail
+  return isLoading ? (
+    <ActivityIndicator size={'large'} />
+  ) : (
     <View>
       <View style={{}}>
         <Card>
@@ -22,6 +29,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
             style={{ height: 500 }}
           />
           <Text>{Year}</Text>
+          <Text>{Plot}</Text>
           <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
           <Text>{imdbRating}</Text>
         </Card>
