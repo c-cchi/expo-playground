@@ -29,18 +29,10 @@ export default movieState = props => {
       let response = await fetch(
         `http://www.omdbapi.com/?apikey=${Constants.manifest.extra.API_KEY}&s=${keyword}`
       ).then(res => res.json())
-      //TODO :: error cases
-      if (response?.['Error']) {
-        dispatch({
-          type: FETCH_MOVIES_FAILURE,
-          payload: response['Error'].toString()
-        })
-      } else {
-        dispatch({
-          type: FETCH_MOVIES_SUCCESS,
-          payload: response['Search']
-        })
-      }
+      dispatch({
+        type: FETCH_MOVIES_SUCCESS,
+        payload: response['Search']
+      })
     } catch (err) {
       dispatch({
         type: FETCH_MOVIES_FAILURE,
@@ -57,7 +49,6 @@ export default movieState = props => {
       let response = await fetch(
         `http://www.omdbapi.com/?apikey=${Constants.manifest.extra.API_KEY}&i=${ID}`
       ).then(res => res.json())
-      console.log(response)
       dispatch({
         type: FETCH_MOVIE_DETAIL_SUCCESS,
         payload: response
