@@ -1,6 +1,5 @@
-import * as WebBrowser from 'expo-web-browser'
 import { useContext, useEffect, useState } from 'react'
-import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, ActivityIndicator, ScrollView } from 'react-native'
 import { Card, AirbnbRating } from '@rneui/themed'
 
 import { Text, View } from './Themed'
@@ -19,20 +18,22 @@ export default function EditScreenInfo({ path }: { path: string }) {
     <ActivityIndicator size={'large'} />
   ) : (
     <View>
-      <View style={{}}>
-        <Card>
-          <Card.Title>{Title}</Card.Title>
-          <Card.Divider />
-          <Card.Image
-            resizeMode="contain"
-            source={{ uri: Poster }}
-            style={{ height: 500 }}
-          />
-          <Text>{Year}</Text>
-          <Text>{Plot}</Text>
-          <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
-          <Text>{imdbRating}</Text>
-        </Card>
+      <View style={{ padding: 10 }}>
+        <ScrollView>
+          <Card>
+            <Card.Title>{Title}</Card.Title>
+            <Card.Divider />
+            <Card.Image
+              resizeMode="contain"
+              source={{ uri: Poster }}
+              style={{ height: 500 }}
+            />
+            <Text>{Year}</Text>
+            <Text>{Plot}</Text>
+            <AirbnbRating count={10} defaultRating={imdbRating} size={20} />
+            <Text>{imdbRating}</Text>
+          </Card>
+        </ScrollView>
       </View>
     </View>
   )
