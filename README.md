@@ -24,3 +24,10 @@ You'll need [AndroidStudio](https://developer.android.com/studio) to run the And
 Create `.env` in the root repo, add omdb api key in the file
 
 `REACT_APP_API_KEY=`
+
+### TODO
+
+- [ ] feature: favorite list tab 
+- [ ] feature: create dark theme
+- [ ] feature: create not found in search page
+- [ ] refactor: url defined, import by env file
