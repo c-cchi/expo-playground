@@ -20,3 +20,7 @@ You'll need [AndroidStudio](https://developer.android.com/studio) to run the And
 ### Run the project
 `npm install` && `expo start`
 
+### .env
+Create `.env` in the root repo, add omdb api key in the file
+
+`REACT_APP_API_KEY=`
